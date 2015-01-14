@@ -61,6 +61,12 @@ int main(int argc, char ** argv)
         return 0; // Not an error
     }
 
+    QDir target(targetDir);
+    if (!target.mkpath(".")) {
+        qWarning() << "SVG2PNG: Could not create target directory" << targetDir;
+        return -1;
+    }
+
     if (zoomFactor <= 0.0) {
         qWarning() << "SVG2PNG: No zoom factor given, defaulting to 1.0";
         zoomFactor = 1.0;
