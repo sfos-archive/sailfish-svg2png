@@ -94,6 +94,8 @@ int main(int argc, char ** argv)
         filePath.replace("svg", "png");
         if (!out.save(filePath)) {
             qWarning() << "SVG2PNG: Failed to save" << filePath;
+        } else {
+            qDebug() << "SVG2PNG: Saved" << filePath << size;
         }
     }
     return 0;
