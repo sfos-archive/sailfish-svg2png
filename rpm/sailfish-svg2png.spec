@@ -8,6 +8,7 @@ License:    TBD
 URL:        https://bitbucket.org/jolla/ui-sailfish-svg2png
 Source0:    %{name}-%{version}.tar.bz2
 BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  fdupes
 

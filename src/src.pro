@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = sailfish_svg2png
 TARGETPATH = /usr/bin
 
-QT += svg
+QT += gui svg
 
 SOURCES += main.cpp
 
