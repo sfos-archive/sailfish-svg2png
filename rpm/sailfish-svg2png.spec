@@ -11,6 +11,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  fdupes
+Requires:   qt5-plugin-platform-minimal
 
 %description
 The Sailfish SVG-to-PNG converter.
