@@ -3,7 +3,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QSvgRenderer>
-#include <QGuiApplication>
+#include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 
@@ -21,10 +21,7 @@ int usage(const char *name)
 
 int main(int argc, char ** argv)
 {
-    setenv("QT_QPA_PLATFORM", "minimal", 1);
-
-    // Use GUI application just to be sure QImage and QPainter work fine
-    QGuiApplication app(argc, argv);
+    QCoreApplication app(argc, argv);
 
     qreal zoomFactor = 0.0;
     QString sourceDir;
