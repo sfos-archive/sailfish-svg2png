@@ -1,7 +1,7 @@
 Name:       sailfish-svg2png
 
 Summary:    Sailfish SVG-2-PNG converter
-Version:    0.0.1
+Version:    0.1.0
 Release:    1
 Group:      System/Libraries
 License:    TBD
@@ -11,6 +11,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  fdupes
+Requires:   qt5-plugin-platform-minimal
 
 %description
 The Sailfish SVG-to-PNG converter.
