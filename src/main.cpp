@@ -6,8 +6,8 @@
 #include <QGuiApplication>
 #include <QDir>
 #include <QFile>
-
 #include <QDebug>
+#include <qmath.h>
 
 
 int usage(const char *name)
@@ -80,7 +80,9 @@ int main(int argc, char ** argv)
             qWarning() << "SVG2PNG: Failed to read default size, skipping file" << file;
             continue;
         }
-        size *= zoomFactor;
+        // Floor target dimension to even number
+        size.setWidth(2 * qFloor(size.width() * zoomFactor * 0.5));
+        size.setHeight(2 * qFloor(size.height() * zoomFactor * 0.5));
 
         QImage out(size, QImage::Format_ARGB32_Premultiplied);
         out.fill(0);
