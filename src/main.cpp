@@ -9,13 +9,23 @@
 
 #include <QDebug>
 
+#define NUM_ICON_CATETORIES 7
 
 int usage(const char *name)
 {
-    printf("Usage: %s [-z zoom] sourceDir targetDir\n", name);
+    printf("Usage: %s [-z zoom] [-s <list of icon category size>] sourceDir targetDir\n", name);
     printf("       Renders SVG files to PNGs\n");
     printf("\n");
     printf("  -z   zoom factor, if not given defaults to 1.0\n");
+    printf("  -s   icon category sizes in the following order:\n");
+    printf("       - extra small\n");
+    printf("       - small\n");
+    printf("       - small plus\n");
+    printf("       - medium\n");
+    printf("       - large\n");
+    printf("       - extra large\n");
+    printf("       - launcher\n");
+
     return -1;
 }
 
@@ -30,6 +40,10 @@ int main(int argc, char ** argv)
     QString sourceDir;
     QString targetDir;
 
+    int iconSourceSizes[NUM_ICON_CATETORIES] = {24, 32, 48, 64, 96, 128, 86};
+    int iconTargetSizes[NUM_ICON_CATETORIES] = {};
+    bool iconTargetSizesSet = false;
+
     int i = 1;
     while (i < argc) {
         if (QLatin1String(argv[i]) == QLatin1String("-z")) {
@@ -39,6 +53,19 @@ int main(int argc, char ** argv)
             }
             if (zoomFactor <= 0.0) {
                 return usage(argv[0]);
+            }
+        } else if (QLatin1String(argv[i]) == QLatin1String("-s")) {
+            if (i + NUM_ICON_CATETORIES >= argc) {
+                return usage(argv[0]);
+            } else {
+                for (int j = 0; j < NUM_ICON_CATETORIES; j++) {
+                    i++;
+                    iconTargetSizes[j] = QString(argv[i]).toInt();
+                    if (iconTargetSizes[j] <= 0) {
+                        return usage(argv[0]);
+                    }
+                }
+                iconTargetSizesSet = true;
             }
         } else if (sourceDir.isEmpty()) {
             sourceDir = QLatin1String(argv[i]);
@@ -80,7 +107,24 @@ int main(int argc, char ** argv)
             qWarning() << "SVG2PNG: Failed to read default size, skipping file" << file;
             continue;
         }
-        size *= zoomFactor;
+
+        if (iconTargetSizesSet) {
+            bool sizeSet = false;
+            for (int i = 0; i < NUM_ICON_CATETORIES; i++) {
+                if (size.width() == iconSourceSizes[i] && size.height() == iconSourceSizes[i]) {
+                    size.setWidth(iconTargetSizes[i]);
+                    size.setHeight(iconTargetSizes[i]);
+                    sizeSet = true;
+                    break;
+                }
+            }
+            if (!sizeSet) {
+                // Not in any group -> Fallback to zoom factor based scaling
+                size *= zoomFactor;
+            }
+        } else {
+            size *= zoomFactor;
+        }
 
         QImage out(size, QImage::Format_ARGB32_Premultiplied);
         out.fill(0);
