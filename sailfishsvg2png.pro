@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = src
+SUBDIRS = src data
 
 OTHER_FILES += \
     rpm/*.spec
-

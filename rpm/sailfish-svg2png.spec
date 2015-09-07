@@ -1,7 +1,7 @@
 Name:       sailfish-svg2png
 
 Summary:    Sailfish SVG-2-PNG converter
-Version:    0.1.0
+Version:    0.1.2
 Release:    1
 Group:      System/Libraries
 License:    TBD
@@ -30,4 +30,6 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_bindir}/sailfish_svg2png
+%{_datadir}/qt5/mkspecs/features/sailfish-svg2png.prf
+
 
