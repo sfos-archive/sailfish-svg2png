@@ -4,7 +4,7 @@ Summary:    Sailfish SVG-2-PNG converter
 Version:    0.1.2
 Release:    1
 Group:      System/Libraries
-License:    TBD
+License:    Proprietary
 URL:        https://bitbucket.org/jolla/ui-sailfish-svg2png
 Source0:    %{name}-%{version}.tar.bz2
 BuildRequires:  pkgconfig(Qt5Core)
