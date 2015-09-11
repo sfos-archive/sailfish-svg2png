@@ -1,5 +1,3 @@
-THEMENAME=jolla-ambient
-
 # a work-around for installing directories that do not exist yet
 system(mkdir -p $${OUT_PWD}/z1.0)
 system(mkdir -p $${OUT_PWD}/z1.25)
