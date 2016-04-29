@@ -1,7 +1,7 @@
 Name:       sailfish-svg2png
 
 Summary:    Sailfish SVG-2-PNG converter
-Version:    0.1.3
+Version:    0.1.4
 Release:    1
 Group:      System/Libraries
 License:    Proprietary
