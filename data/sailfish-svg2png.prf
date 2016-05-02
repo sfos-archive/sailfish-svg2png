@@ -3,6 +3,7 @@ system(mkdir -p $${OUT_PWD}/z1.0)
 system(mkdir -p $${OUT_PWD}/z1.25)
 system(mkdir -p $${OUT_PWD}/z1.5)
 system(mkdir -p $${OUT_PWD}/z1.5-large)
+system(mkdir -p $${OUT_PWD}/z1.75)
 system(mkdir -p $${OUT_PWD}/z2.0)
 
 theme.path = /usr/share/themes/$${THEMENAME}/
@@ -14,14 +15,16 @@ exists( $${OUT_PWD}/symlinks ) {
     svg2png.commands += cp -r symlinks/icons z1.25 &&
     svg2png.commands += cp -r symlinks/icons z1.5 &&
     svg2png.commands += cp -r symlinks/icons z1.5-large &&
+    svg2png.commands += cp -r symlinks/icons z1.75 &&
     svg2png.commands += cp -r symlinks/icons z2.0 &&
 }
 svg2png.commands += /usr/bin/sailfish_svg2png -z 1.0 svgs z1.0/icons &&
 svg2png.commands += /usr/bin/sailfish_svg2png -z 1.25 svgs z1.25/icons &&
 svg2png.commands += /usr/bin/sailfish_svg2png -z 1.5 svgs z1.5/icons &&
 svg2png.commands += /usr/bin/sailfish_svg2png -z 1.5 -s 36 48 60 72 108 144 128 svgs z1.5-large/icons &&
+svg2png.commands += /usr/bin/sailfish_svg2png -z 1.75 svgs z1.75/icons &&
 svg2png.commands += /usr/bin/sailfish_svg2png -z 2.0 svgs z2.0/icons
-svg2png.files = z1.0 z1.25 z1.5 z1.5-large z2.0
+svg2png.files = z1.0 z1.25 z1.5 z1.5-large z1.75 z2.0
 svg2png.path = $${themeDirectory.path}
 
 INSTALLS += svg2png theme themeDirectory
