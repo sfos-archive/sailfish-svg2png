@@ -1,0 +1,26 @@
+
+
+%_sailfish_content_graphics_package(z:d:) \
+%package %{?sailfish_content_graphics_name}%{?!sailfish_content_graphics_name:%{-z*}}  \
+Summary:       %{sailfish_content_graphics_summary} \
+Requires:      %{name} = %{version}-%{release} \
+\
+%description %{?sailfish_content_graphics_name}%{?!sailfish_content_graphics_name:%{-z*}} \
+%{?sailfish_content_graphics_description}%{!?sailfish_content_graphics_description:%{?sailfish_content_graphics_summary}.} \
+\
+%files %{?sailfish_content_graphics_name}%{?!sailfish_content_graphics_name:%{-z*}} \
+%defattr(-,root,root,-) \
+%dir %{_datadir}/themes/%{theme}/meegotouch/%{-z*} \
+%dir %{_datadir}/themes/%{theme}/meegotouch/%{-z*}/icons \
+%{_datadir}/themes/%{theme}/meegotouch/%{-z*}/icons/*.png \
+\
+%{?sailfish_content_graphics_additional_package}
+
+%_sailfish_content_graphics_packages \
+%_sailfish_content_graphics_package -z z1.0 -d 1.0 \
+%_sailfish_content_graphics_package -z z1.25 -d 1.25 \
+%_sailfish_content_graphics_package -z z1.5 -d 1.5 \
+%_sailfish_content_graphics_package -z z1.5-large -d 1.5 for large screens \
+%_sailfish_content_graphics_package -z z1.75 -d 1.75 \
+%_sailfish_content_graphics_package -z z2.0 -d 2.0
+
