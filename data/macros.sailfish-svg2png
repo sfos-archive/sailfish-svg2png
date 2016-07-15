@@ -4,6 +4,7 @@
 %package %{?sailfish_content_graphics_name}%{?!sailfish_content_graphics_name:%{-z*}}  \
 Summary:       %{sailfish_content_graphics_summary} \
 Requires:      %{name} = %{version}-%{release} \
+%sailfish_content_graphics_dependencies \
 \
 %description %{?sailfish_content_graphics_name}%{?!sailfish_content_graphics_name:%{-z*}} \
 %{?sailfish_content_graphics_description}%{!?sailfish_content_graphics_description:%{?sailfish_content_graphics_summary}.} \
