@@ -1,6 +1,6 @@
 TEMPLATE = aux
 
-feature.path = $$PREFIX/share/qt5/mkspecs/features/
+feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
 feature.files = $$files(*.prf)
 
 macros.files = macros.sailfish-svg2png
