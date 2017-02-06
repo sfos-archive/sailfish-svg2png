@@ -128,11 +128,15 @@ int main(int argc, char ** argv)
 
         QImage out(size, QImage::Format_ARGB32_Premultiplied);
         out.fill(0);
+
         QPainter painter(&out);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setRenderHint(QPainter::TextAntialiasing);
         painter.setRenderHint(QPainter::SmoothPixmapTransform);
         renderer.render(&painter, out.rect());
+
+        // Pre-calculate grayscale information for the inverted ambiences
+        out.setText("Grayscale", out.isGrayscale() ? "true" : "false");
 
         QString filePath = targetDir + QDir::separator() + file;
         filePath.replace("svg", "png");
