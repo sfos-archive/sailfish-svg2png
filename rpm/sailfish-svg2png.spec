@@ -31,5 +31,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_bindir}/sailfish_svg2png
 %{_datadir}/qt5/mkspecs/features/sailfish-svg2png.prf
+%{_datadir}/qt5/mkspecs/features/sailfish-svg2png-sizes.prf
 %{_sysconfdir}/rpm/macros.sailfish-svg2png
 

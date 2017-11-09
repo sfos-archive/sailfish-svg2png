@@ -13,10 +13,11 @@
 
 int usage(const char *name)
 {
-    printf("Usage: %s [-z zoom] [-s <list of icon category size>] sourceDir targetDir\n", name);
+    printf("Usage: %s [-z zoom] [-f grayscale|rgb|rgba] [-s <list of icon category size>] sourceDir targetDir\n", name);
     printf("       Renders SVG files to PNGs\n");
     printf("\n");
     printf("  -z   zoom factor, if not given defaults to 1.0\n");
+    printf("  -f   color format, if not given defaults to rgba\n");
     printf("  -s   icon category sizes in the following order:\n");
     printf("       - extra small\n");
     printf("       - small\n");
@@ -43,10 +44,13 @@ int main(int argc, char ** argv)
     int iconSourceSizes[NUM_ICON_CATETORIES] = {24, 32, 48, 64, 96, 128, 86};
     int iconTargetSizes[NUM_ICON_CATETORIES] = {};
     bool iconTargetSizesSet = false;
+    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
 
     int i = 1;
     while (i < argc) {
-        if (QLatin1String(argv[i]) == QLatin1String("-z")) {
+        const QLatin1String argument(argv[i]);
+
+        if (argument == QLatin1String("-z")) {
             i++;
             if (i < argc) {
                 zoomFactor = QString(argv[i]).toFloat();
@@ -54,7 +58,7 @@ int main(int argc, char ** argv)
             if (zoomFactor <= 0.0) {
                 return usage(argv[0]);
             }
-        } else if (QLatin1String(argv[i]) == QLatin1String("-s")) {
+        } else if (argument == QLatin1String("-s")) {
             if (i + NUM_ICON_CATETORIES >= argc) {
                 return usage(argv[0]);
             } else {
@@ -66,6 +70,19 @@ int main(int argc, char ** argv)
                     }
                 }
                 iconTargetSizesSet = true;
+            }
+        } else if (argument == "-f") {
+            ++i;
+
+            const QLatin1String argument = i < argc ? QLatin1String(argv[i]) : QLatin1String();
+            if (argument == "grayscale") {
+                format = QImage::Format_Grayscale8;
+            } else if (argument == "rgb") {
+                format = QImage::Format_RGB32;
+            } else if (argument == "rgba") {
+                // This is the default.
+            } else {
+                return usage(argv[0]);
             }
         } else if (sourceDir.isEmpty()) {
             sourceDir = QLatin1String(argv[i]);
@@ -126,7 +143,7 @@ int main(int argc, char ** argv)
             size *= zoomFactor;
         }
 
-        QImage out(size, QImage::Format_ARGB32_Premultiplied);
+        QImage out(size, format);
         out.fill(0);
 
         QPainter painter(&out);

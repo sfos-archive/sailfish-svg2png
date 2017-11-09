@@ -1,30 +1,25 @@
-# a work-around for installing directories that do not exist yet
-system(mkdir -p $${OUT_PWD}/z1.0)
-system(mkdir -p $${OUT_PWD}/z1.25)
-system(mkdir -p $${OUT_PWD}/z1.5)
-system(mkdir -p $${OUT_PWD}/z1.5-large)
-system(mkdir -p $${OUT_PWD}/z1.75)
-system(mkdir -p $${OUT_PWD}/z2.0)
+load(sailfish-svg2png-sizes)
 
 theme.path = /usr/share/themes/$${THEMENAME}/
 themeDirectory.path = /usr/share/themes/$${THEMENAME}/meegotouch
 themeDirectory.files += icons
 
-exists( $${OUT_PWD}/symlinks ) {
-    svg2png.commands += cp -r symlinks/icons z1.0 &&
-    svg2png.commands += cp -r symlinks/icons z1.25 &&
-    svg2png.commands += cp -r symlinks/icons z1.5 &&
-    svg2png.commands += cp -r symlinks/icons z1.5-large &&
-    svg2png.commands += cp -r symlinks/icons z1.75 &&
-    svg2png.commands += cp -r symlinks/icons z2.0 &&
+for(profile, SAILFISH_SVG2PNG.profiles) {
+    # a work-around for installing directories that do not exist yet
+    system(mkdir -p $${OUT_PWD}/z$${profile})
+
+    exists( $${OUT_PWD}/symlinks ): svg2png.commands += cp -r symlinks/icons z$${profile} &&
+
+    svg2png.commands += /usr/bin/sailfish_svg2png \
+        -z $$eval(SAILFISH_SVG2PNG.scales.$${profile}) \
+        $$eval(SAILFISH_SVG2PNG.extra.$${profile}) \
+         svgs \
+         z$${profile}/icons &&
+
+    svg2png.files += z$${profile}
 }
-svg2png.commands += /usr/bin/sailfish_svg2png -z 1.0 svgs z1.0/icons &&
-svg2png.commands += /usr/bin/sailfish_svg2png -z 1.25 svgs z1.25/icons &&
-svg2png.commands += /usr/bin/sailfish_svg2png -z 1.5 svgs z1.5/icons &&
-svg2png.commands += /usr/bin/sailfish_svg2png -z 1.5 -s 36 48 60 72 108 144 128 svgs z1.5-large/icons &&
-svg2png.commands += /usr/bin/sailfish_svg2png -z 1.75 -s 42 56 84 112 168 224 172 svgs z1.75/icons &&
-svg2png.commands += /usr/bin/sailfish_svg2png -z 2.0 svgs z2.0/icons
-svg2png.files = z1.0 z1.25 z1.5 z1.5-large z1.75 z2.0
+
+svg2png.commands += true
 svg2png.path = $${themeDirectory.path}
 
 INSTALLS += svg2png theme themeDirectory
