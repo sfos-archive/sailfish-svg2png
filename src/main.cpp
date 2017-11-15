@@ -9,7 +9,7 @@
 
 #include <QDebug>
 
-#define NUM_ICON_CATETORIES 7
+#define NUM_ICON_CATEGORIES 7
 
 int usage(const char *name)
 {
@@ -18,6 +18,7 @@ int usage(const char *name)
     printf("\n");
     printf("  -z   zoom factor, if not given defaults to 1.0\n");
     printf("  -f   color format, if not given defaults to rgba\n");
+    printf("  -w   expected width of the target display in pixels\n");
     printf("  -s   icon category sizes in the following order:\n");
     printf("       - extra small\n");
     printf("       - small\n");
@@ -28,6 +29,11 @@ int usage(const char *name)
     printf("       - launcher\n");
 
     return -1;
+}
+
+static int even(qreal value)
+{
+    return 2*qRound(value / 2.0);
 }
 
 int main(int argc, char ** argv)
@@ -41,10 +47,11 @@ int main(int argc, char ** argv)
     QString sourceDir;
     QString targetDir;
 
-    int iconSourceSizes[NUM_ICON_CATETORIES] = {24, 32, 48, 64, 96, 128, 86};
-    int iconTargetSizes[NUM_ICON_CATETORIES] = {};
+    int iconSourceSizes[NUM_ICON_CATEGORIES] = {24, 32, 48, 64, 96, 128, 86};
+    int iconTargetSizes[NUM_ICON_CATEGORIES] = {};
     bool iconTargetSizesSet = false;
     QImage::Format format = QImage::Format_ARGB32_Premultiplied;
+    int expectedWidth = -1;
 
     int i = 1;
     while (i < argc) {
@@ -58,11 +65,14 @@ int main(int argc, char ** argv)
             if (zoomFactor <= 0.0) {
                 return usage(argv[0]);
             }
+        } else if (argument == QLatin1String("-w")) {
+            i++;
+            expectedWidth = QString(argv[i]).toInt();
         } else if (argument == QLatin1String("-s")) {
-            if (i + NUM_ICON_CATETORIES >= argc) {
+            if (i + NUM_ICON_CATEGORIES >= argc) {
                 return usage(argv[0]);
             } else {
-                for (int j = 0; j < NUM_ICON_CATETORIES; j++) {
+                for (int j = 0; j < NUM_ICON_CATEGORIES; j++) {
                     i++;
                     iconTargetSizes[j] = QString(argv[i]).toInt();
                     if (iconTargetSizes[j] <= 0) {
@@ -127,7 +137,7 @@ int main(int argc, char ** argv)
 
         if (iconTargetSizesSet) {
             bool sizeSet = false;
-            for (int i = 0; i < NUM_ICON_CATETORIES; i++) {
+            for (int i = 0; i < NUM_ICON_CATEGORIES; i++) {
                 if (size.width() == iconSourceSizes[i] && size.height() == iconSourceSizes[i]) {
                     size.setWidth(iconTargetSizes[i]);
                     size.setHeight(iconTargetSizes[i]);
@@ -137,10 +147,13 @@ int main(int argc, char ** argv)
             }
             if (!sizeSet) {
                 // Not in any group -> Fallback to zoom factor based scaling
-                size *= zoomFactor;
+                size = QSize(even(size.width() * zoomFactor), even(size.height() * zoomFactor));
             }
+        } else if (expectedWidth > 0 && size.height() == iconSourceSizes[NUM_ICON_CATEGORIES - 1 /* launcher icon */]) {
+            int widthRatio = qreal(expectedWidth) / 540;
+            size = QSize(even(size.width() * widthRatio), even(size.height() * widthRatio));
         } else {
-            size *= zoomFactor;
+            size = QSize(even(size.width() * zoomFactor), even(size.height() * zoomFactor));
         }
 
         QImage out(size, format);
