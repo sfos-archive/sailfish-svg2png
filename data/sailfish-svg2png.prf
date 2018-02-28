@@ -2,7 +2,7 @@ load(sailfish-svg2png-sizes)
 
 theme.path = /usr/share/themes/$${THEMENAME}/
 themeDirectory.path = /usr/share/themes/$${THEMENAME}/meegotouch
-themeDirectory.files += icons
+themeDirectory.files += $${OUT_PWD}/icons
 
 for(profile, SAILFISH_SVG2PNG.profiles) {
     # a work-around for installing directories that do not exist yet
@@ -13,7 +13,7 @@ for(profile, SAILFISH_SVG2PNG.profiles) {
     svg2png.commands += /usr/bin/sailfish_svg2png \
         -z $$eval(SAILFISH_SVG2PNG.scales.$${profile}) \
         $$eval(SAILFISH_SVG2PNG.extra.$${profile}) \
-         svgs \
+         $${_PRO_FILE_PWD_}/svgs \
          z$${profile}/icons &&
 
     svg2png.files += z$${profile}
