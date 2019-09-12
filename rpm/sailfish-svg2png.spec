@@ -10,6 +10,10 @@ Source0:    %{name}-%{version}.tar.bz2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
+BuildRequires:  pkgconfig(librsvg-2.0)
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(cairo)
+BuildRequires:  pkgconfig(libpng)
 BuildRequires:  fdupes
 Requires:   qt5-plugin-platform-minimal
 
