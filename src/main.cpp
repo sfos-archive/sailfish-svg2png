@@ -87,6 +87,7 @@ static void pngWarningCallback(png_structp png, png_const_charp warningMsg)
     qWarning() << "PNG warning" << warningMsg;
 }
 
+// N.B. not any kind of grayscale, needs to be different transparency levels of white
 static bool surfaceIsGrayscale(cairo_surface_t *cairoSurface)
 {
     int height = cairo_image_surface_get_height(cairoSurface);
@@ -94,13 +95,16 @@ static bool surfaceIsGrayscale(cairo_surface_t *cairoSurface)
     int stride = cairo_image_surface_get_stride(cairoSurface);
 
     for (int i = 0; i < height; ++i) {
-        int32_t *rowPointer = (int32_t*) (cairo_image_surface_get_data(cairoSurface) + i * stride);
+        uint32_t *rowPointer = (uint32_t*) (cairo_image_surface_get_data(cairoSurface) + i * stride);
         for (int j = 0; j < width; ++j) {
-            int pixel = rowPointer[j];
+            unsigned int pixel = rowPointer[j];
+            int alpha = (pixel & 0xff000000) >> 24;
             int red = (pixel & 0xff0000) >> 16;
             int green = (pixel & 0xff00) >> 8;
             int blue = pixel & 0xff;
-            if (red != green || red != blue) {
+
+            if (red != green || red != blue
+                || (alpha > 0 && red != alpha)) {
                 return false;
             }
         }
