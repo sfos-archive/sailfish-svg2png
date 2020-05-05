@@ -1,4 +1,11 @@
 
+%sailfish_content_graphics_for_each_scale \
+ %sailfish_content_graphics_for_scale -z z1.0 -d 1.0 \
+ %sailfish_content_graphics_for_scale -z z1.25 -d 1.25 \
+ %sailfish_content_graphics_for_scale -z z1.5 -d 1.5 \
+ %sailfish_content_graphics_for_scale -z z1.5-large -d 1.5 for large screens \
+ %sailfish_content_graphics_for_scale -z z1.75 -d 1.75 \
+ %sailfish_content_graphics_for_scale -z z2.0 -d 2.0
 
 %_sailfish_content_graphics_package(z:d:) \
 %package %{?sailfish_content_graphics_name}%{?!sailfish_content_graphics_name:%{-z*}}  \
@@ -16,11 +23,7 @@ Summary:       %{sailfish_content_graphics_summary} \
 \
 %{?sailfish_content_graphics_additional_package}
 
-%_sailfish_content_graphics_packages \
-%_sailfish_content_graphics_package -z z1.0 -d 1.0 \
-%_sailfish_content_graphics_package -z z1.25 -d 1.25 \
-%_sailfish_content_graphics_package -z z1.5 -d 1.5 \
-%_sailfish_content_graphics_package -z z1.5-large -d 1.5 for large screens \
-%_sailfish_content_graphics_package -z z1.75 -d 1.75 \
-%_sailfish_content_graphics_package -z z2.0 -d 2.0
 
+%_sailfish_content_graphics_packages \
+ %define sailfish_content_graphics_for_scale(z:d:) %_sailfish_content_graphics_package -z %{-z*} -d %{-d*} \
+ %sailfish_content_graphics_for_each_scale
