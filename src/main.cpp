@@ -237,10 +237,9 @@ static bool renderWithCairo(const QFileInfo &fileInfo, const QString &targetDir)
     if (!rsvg_handle_render_cairo(rsvg, cairoContext)) {
         qWarning() << "SVG2PNG: SVG rendering failed for" << fileInfo.fileName();
     } else {
-        QString outFilePath = targetDir + QDir::separator() + fileInfo.fileName();
-        outFilePath.replace("svg", "png");
+        QString outFilePath = targetDir + QDir::separator() + fileInfo.completeBaseName() + QLatin1String(".png");
         if (writeCairoToPng(cairoSurface, qPrintable(outFilePath))) {
-            qDebug() << "SVG2PNG: Saved" << fileInfo.filePath() << size;
+            qDebug() << "SVG2PNG: Saved" << outFilePath << size;
             success = true;
         }
     }
@@ -276,8 +275,7 @@ static bool renderWithQt(const QFileInfo &fileInfo, const QString &targetDir, QI
     // Pre-calculate grayscale information for the inverted ambiences
     out.setText("Grayscale", out.isGrayscale() ? "true" : "false");
 
-    QString filePath = targetDir + QDir::separator() + fileInfo.fileName();
-    filePath.replace("svg", "png");
+    QString filePath = targetDir + QDir::separator() + fileInfo.completeBaseName() + QLatin1String(".png");
     if (!out.save(filePath)) {
         qWarning() << "SVG2PNG: Failed to save" << filePath;
         return false;
