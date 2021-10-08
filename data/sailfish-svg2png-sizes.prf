@@ -4,7 +4,8 @@ SAILFISH_SVG2PNG.profiles = \
     1.5 \
     1.5-large \
     1.75 \
-    2.0
+    2.0 \
+    2.5
 
 SAILFISH_SVG2PNG.scales.1.0 = 1.0
 SAILFISH_SVG2PNG.scales.1.25 = 1.25
@@ -12,6 +13,7 @@ SAILFISH_SVG2PNG.scales.1.5 = 1.5
 SAILFISH_SVG2PNG.scales.1.5-large = 1.5
 SAILFISH_SVG2PNG.scales.1.75 = 1.75
 SAILFISH_SVG2PNG.scales.2.0 = 2.0
+SAILFISH_SVG2PNG.scales.2.5 = 2.5
 
 SAILFISH_SVG2PNG.extra.1.5-large = -s 36 48 60 72 108 144 128
 SAILFISH_SVG2PNG.extra.1.5 = -s 36 48 72 96 144 192 150
