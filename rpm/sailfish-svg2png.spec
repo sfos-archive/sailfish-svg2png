@@ -3,7 +3,6 @@ Name:       sailfish-svg2png
 Summary:    Sailfish SVG-2-PNG converter
 Version:    0.3.2
 Release:    1
-Group:      System/Libraries
 License:    Proprietary
 URL:        https://bitbucket.org/jolla/ui-sailfish-svg2png
 Source0:    %{name}-%{version}.tar.bz2
@@ -27,7 +26,6 @@ The Sailfish SVG-to-PNG converter.
 %qmake5
 
 %install
-rm -rf %{buildroot}
 %qmake5_install
 %fdupes %{buildroot}/%{_libdir}
 
@@ -36,5 +34,5 @@ rm -rf %{buildroot}
 %{_bindir}/sailfish_svg2png
 %{_datadir}/qt5/mkspecs/features/sailfish-svg2png.prf
 %{_datadir}/qt5/mkspecs/features/sailfish-svg2png-sizes.prf
-%{_sysconfdir}/rpm/macros.sailfish-svg2png
+%{_rpmmacrodir}/macros.sailfish-svg2png
 
